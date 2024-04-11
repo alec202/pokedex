@@ -8,7 +8,7 @@ import readline from 'readline';
 // )
 
 
-let apiConnect2 = fetch('https://pokeapi.co/api/v2/item/revive')
+let apiConnect2 = fetch('https://pokeapi.co/api/v2/move/water-gun')
     .then(response => response.json())
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
@@ -76,6 +76,24 @@ function printItem(data){
 
 }
 
+function searchMove(move){
+    let apiConnect = fetch('https://pokeapi.co/api/v2/move/' + move)
+        .then(response => response.json())
+        .then(data => printMove(data))
+        .catch(error => console.error('Error:', error));
+}
+
+function printMove(data){
+    console.log()
+    console.log("This move's accuracy is: " + data.accuracy)
+    console.log("This move's effect is: " + data.effect_entries[0].short_effect)
+    console.log("This move's power is: " + data.power)
+    console.log("This move's pp: " + data.pp)
+    console.log()
+    run()
+}
+
+
 function run(){
     showMenu()
     rl.question("What is your choice? ", (choice) => {
@@ -87,6 +105,9 @@ function run(){
         } else if (choice[0] == 2){
             console.log("Your choice was: " + choice + ", to search for an item")
             prompt(searchItem)
+        } else if (choice[0] == 3){
+            console.log("Your choice was: " + choice + ", to search for a move")
+            prompt(searchMove)
         }
     })
 }
